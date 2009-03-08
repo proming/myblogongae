@@ -5,6 +5,7 @@ from google.appengine.api import users
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, Context
 import logging
+import math
 from models import Blog, Category, Archive, Comment, FriendlyURL
 from forms import BlogForm, CommentForm, URLForm
 
@@ -24,21 +25,98 @@ def base_context():
 
 def index(request):
     context = base_context()
-    blogs = Blog.all().order('-date')
+    rpp = record_per_page()
+    cur_page = 1
+    if request != '' and request.method == 'POST':
+        cur_page = int(request.POST['jumpPage'])
+    else:
+        cur_page = 1
+    
+    blogs_count = Blog.all().count()
+    max_page = blogs_count / rpp
+    temp2 = blogs_count % rpp
+    if temp2 != 0:
+        max_page = max_page + 1
+        
+    if cur_page > max_page or cur_page <= 0:
+        cur_page = max_page
+        blogs = Blog.all().order('-date').fetch(0); 
+    else:
+        blogs = Blog.all().order('-date').fetch(rpp, rpp * (cur_page - 1)); 
+
+    context.cur_page = cur_page
+    context.max_page = max_page
+    context.action_mode = '/'
+    context.range1 = range(1, max_page + 1)
+    context.up_page=cur_page - 1
+    context.down_page=cur_page + 1
     context.blogs = blogs
     template = loader.get_template('blogs/index.html')
     return HttpResponse(template.render(context))
 
 def show_by_archive(request, year, month):
     context = base_context()
-    blogs = Blog.all().filter('year', int(year)).filter('month', int(month)).order('-date')
+    rpp = record_per_page()
+    cur_page = 1
+    if request != '' and request.method == 'POST':
+        cur_page = int(request.POST['jumpPage'])
+    else:
+        cur_page = 1
+    
+    blogs_count = Blog.all().filter('year', int(year)).filter('month', int(month)).count()
+    max_page = blogs_count / rpp
+    temp2 = blogs_count % rpp
+    if temp2 != 0:
+        max_page = max_page + 1
+    
+    if cur_page > max_page or cur_page <= 0:
+        cur_page = max_page
+        
+    if cur_page > max_page:
+        cur_page = max_page
+        blogs = Blog.all().filter('year', int(year)).filter('month', int(month)).order('-date').fetch(0);
+    else:
+        blogs = Blog.all().filter('year', int(year)).filter('month', int(month)).order('-date').fetch(rpp, rpp * (cur_page - 1)); 
+    
+    context.cur_page = cur_page
+    context.max_page = max_page
+    context.action_mode = '/archive/' + year + '/' + month
+    context.range1 = range(1, max_page + 1)
+    context.up_page=cur_page - 1
+    context.down_page=cur_page + 1
     context.blogs = blogs
     template = loader.get_template('blogs/index.html')
     return HttpResponse(template.render(context))
 
 def show_by_category(request, key):
     context = base_context()
-    blogs = Blog.all().filter('category', Category.get(key)).order('-date')
+    rpp = record_per_page()
+    cur_page = 1
+    if request != '' and request.method == 'POST':
+        cur_page = int(request.POST['jumpPage'])
+    else:
+        cur_page = 1
+    
+    blogs_count = Blog.all().filter('category', Category.get(key)).count()
+    max_page = blogs_count / rpp
+    temp2 = blogs_count % rpp
+    if temp2 != 0:
+        max_page = max_page + 1
+    
+    if cur_page > max_page or cur_page <= 0:
+        cur_page = max_page
+    
+    if cur_page > max_page:
+        cur_page = max_page
+        blogs = Blog.all().filter('category', Category.get(key)).order('-date').fetch(0); 
+    else:
+        blogs = Blog.all().filter('category', Category.get(key)).order('-date').fetch(rpp, rpp * (cur_page - 1)); 
+    context.cur_page = cur_page
+    context.max_page = max_page
+    context.action_mode = '/category/' + key + '/show'
+    context.range1 = range(1, max_page + 1)
+    context.up_page=cur_page - 1
+    context.down_page=cur_page + 1
     context.blogs = blogs
     template = loader.get_template('blogs/index.html')
     return HttpResponse(template.render(context))
@@ -232,4 +310,6 @@ def admin():
     return users.is_current_user_admin()
 
 def current_user():
-    return users.get_current_user()
+    return users.get_current_user()def record_per_page():
+    return 3
+

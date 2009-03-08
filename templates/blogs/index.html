@@ -8,9 +8,10 @@ margin-bottom:15px;
 </style>
 <script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shCore.js"></script>
 <script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shAllSyntax.js"></script>
+<script type="text/javascript" src="/jscripts/page.js"></script>
 <link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shCore.css"/>
 <link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shThemeDefault.css"/>
-<script type="text/javascript">
+<script text="JavaScript">
 	SyntaxHighlighter.config.clipboardSwf = '/jscripts/syntaxhighlighter/scripts/clipboard.swf';
 	SyntaxHighlighter.all();
 </script>
@@ -24,4 +25,43 @@ margin-bottom:15px;
 <ul class="inline_list"><li>分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li><a href="/blog/{{blog.key}}/show">浏览({{blog.browsed_count}})</a></li><li class="end"><a href="/blog/{{blog.key}}/show#comments">评论({{blog.comment_set.count}})</a></li></ul>
 <hr>
 {% endfor %}
+
+<div>
+<form action="{{action_mode}}" method="post" name="pageForm">
+
+第{{cur_page}}页
+共{{max_page}}页
+<BR>
+{% ifequal cur_page 1 %}
+ 首页 上一页 
+{% endifequal %}
+{% ifequal cur_page 0 %}
+ 首页 上一页 
+{% endifequal %}
+{% ifnotequal cur_page 1 %}
+{% ifnotequal cur_page 0 %}
+<A HREF="javascript:gotoPage(1)">首页</A>
+<A HREF="javascript:gotoPage({{up_page}})">上一页</A>
+{% endifnotequal %}
+{% endifnotequal %}
+{% ifequal cur_page max_page %}
+下一页 尾页
+{% endifequal %}
+{% ifnotequal cur_page max_page %}
+<A HREF="javascript:gotoPage({{down_page}})">下一页</A>
+<A HREF="javascript:gotoPage({{max_page}})">尾页</A>
+{% endifnotequal %}
+转到第<SELECT name="jump" onchange="Jumping()">
+     {% for i in range1 %}
+     {% ifequal cur_page i %}
+        <OPTION value={{i}} selected>{{i}}</OPTION>
+     {% endifequal %}
+     {% ifnotequal cur_page i %}
+        <OPTION value={{i}}>{{i}}</OPTION>
+     {% endifnotequal %}
+     {% endfor %}  
+     </SELECT>页
+<input name="jumpPage" type="hidden">
+</form>
+</div>
 {% endblock %}
