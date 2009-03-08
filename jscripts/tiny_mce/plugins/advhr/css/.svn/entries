@@ -1,0 +1,30 @@
+9
+
+dir
+0
+https://myblogongae.googlecode.com/svn/trunk/jscripts/tiny_mce/plugins/advhr/css
+https://myblogongae.googlecode.com/svn
+add
+
+
+
+
+
+
+
+svn:special svn:externals svn:needs-lock
+
+advhr.css
+file
+
+
+
+add
+
+
+
+
+
+has-props
+has-prop-mods
+

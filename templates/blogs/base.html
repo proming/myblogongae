@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>刘鲁杰的博客</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<!-- Framework CSS -->
+<link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
+<link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print">
+<!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
+<style type="text/css">
+#title{
+text-align:center;
+}
+.inline_list {
+padding: 0px;
+}
+.inline_list li {
+  display: inline;
+  padding: 0 5px;
+}
+#user_nav{
+text-align:right;
+}
+</style>
+</head>
+<body>
+{% block head %}{% endblock %}
+<div class="container">
+<ul id="user_nav" class="inline_list">
+{% if current_user %}
+  <li>{{current_user.nickname}}</li>
+{% if admin %}
+  <li><a href="http://appengine.google.com/">管理</a></li>
+{% endif %}
+  <li class="end"><a href="{{logout_url}}">退出</a></li>
+{% else %}
+  <li>您还没有登录 !</li><li class="end"><a href="{{login_url}}">登录</a></li>
+{% endif %}
+</ul>
+<div id="title">
+<h1><a href="/">刘鲁杰的博客</a></h1>
+<h2>I like programming</h2>
+</div>
+<hr>
+<div class="span-5 colborder">
+{% if admin %}
+<h3><a href="/blog/new">发表新文章</a></h3>
+{% endif %}
+<h3>博客分类</h3>
+<ul><li><a href="/">全部分类({{blogs_count}})</a></li>
+{% for category in categories %}
+  <li><a href="/category/{{category.key}}/show">{{category.name}}({{category.blog_set.count}})</a></li>
+{% endfor %}
+</ul>
+<h3>存档</h3>
+<ul>
+{% for archive in archives %}
+  <li><a href="/archive/{{archive.year}}/{{archive.month}}">{{archive.year}}年{{archive.month}}月({{archive.weblog_count}})</a></li>
+{% endfor %}
+</ul>
+<h3>最新评论</h3>
+<ul>
+{% for comment in recent_comments %}
+  <li>
+    <h4>{{comment.content}}</h4>
+    <h4>{{comment.author.nickname}}对文章:<a href="/blog/{{comment.blog.key}}/show">{{comment.blog.title}}</a>的评论</h4>
+  </li>
+{% endfor %}
+</ul>
+<h3>{% if admin %}<a href="/url/new">新建链接</a>{% endif %}</h3>
+<h3>链接</h3>
+<ul>
+{% for friendlyURL in friendlyURLs %}
+  <li><a href="{{friendlyURL.URL}}" target="_blank">{{friendlyURL.name}}</a>
+{%if admin %}<a href="/url/{{friendlyURL.key}}/edit">编辑</a><a href="/url/{{friendlyURL.key}}/delete">删除</a>{% endif %}</li>
+{% endfor %}
+</ul>
+<h3>Google App Engine</h3>
+<ul>
+<li><a href="http://appengine.google.com/" target="_blank">App Engine管理平台</a></li>
+<li><a href="http://code.google.com/appengine/" target="_blank">Google App Engine</a></li>
+<li><a href="http://groups.google.com/group/google-appengine" target="_blank">App Engine 论坛</a></li>
+</ul>
+</div>
+<!--span-5 colborder-->
+<div class="span-17 last">
+{% block content %}{% endblock %}
+</div>
+</div><!--container-->
+</body>
+</html>

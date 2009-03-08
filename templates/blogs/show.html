@@ -1,0 +1,53 @@
+{% extends "blogs/base.html" %}
+{% load humanize %}
+{% block head %}
+<script type="text/javascript" src="/jscripts/jquery.js"></script>
+<script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shAllSyntax.js"></script>
+<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+SyntaxHighlighter.config.clipboardSwf = '/jscripts/syntaxhighlighter/scripts/clipboard.swf';
+SyntaxHighlighter.all();
+function submit_comment(){
+	$.post('/blog/{{blog.key}}/comment/create',
+			{content:$('#id_content').val()},
+			function(data){
+				if(data!=''){
+					$('#comments').append(data);
+					$('#comments_count').html(Number($('#comments_count').html())+1);
+					$('#id_content').val('');
+					$('#hint').html('您提交了一条评论');
+					$('#hint').slideDown('slow');
+					$('#hint').hide(3000);
+				}else{
+					$('#hint').html('请填写内容再提交');
+					$('#hint').slideDown('slow');
+					$('#hint').hide(3000);
+				}
+			}
+	);
+	
+}
+</script>
+{% endblock %}
+{% block content %}
+<h3><a href="/blog/{{blog.key}}/show">{{blog.title}}</a></h3>
+<h4>{{blog.date|naturalday}}</h4>
+{{blog.content|safe}}
+{% if admin %}<ul class="inline_list"><li><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="end"><a href="/blog/{{blog.key}}/delete">删除</a></li></ul>{% endif %}
+<ul class="inline_list"><li>分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li>浏览({{blog.browsed_count}})</li><li class="end">评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li></ul>
+<div id="comments">
+{% for comment in comments %}
+{% include "blogs/_comment.html" %}
+{% endfor %}
+</div>
+{% if current_user %}
+<div id="hint" style="display: none;"></div>
+<p>{{ form.content.label_tag }}</p>
+<p>{{ form.content }}</p>
+<input type="button" value="提交" onclick="submit_comment();"/>
+{% else %}
+<div>您还没有登录!请<a href="{{login_url}}">登录</a>后发表评论</div>
+{% endif %}
+{% endblock %}

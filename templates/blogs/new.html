@@ -1,0 +1,13 @@
+{% extends "blogs/base.html" %}
+{% block head %}
+<script language="javascript" type="text/javascript" src="/jscripts/tiny_mce/tiny_mce.js"></script>
+<script language="javascript" type="text/javascript" src="/jscripts/tiny_mce_config.js"></script>
+{% endblock %}
+{% block content %}
+<div class="blueborder">
+<form action="/blog/create" method="post">
+{{form.as_p}}
+<input type="submit" value="提交"/>
+</form>
+</div>
+{% endblock %}

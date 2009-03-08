@@ -1,0 +1,27 @@
+{% extends "blogs/base.html" %}
+{% load humanize %}
+{% block head %}
+<style type="text/css">
+.blog{
+margin-bottom:15px;
+}
+</style>
+<script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shCore.js"></script>
+<script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shAllSyntax.js"></script>
+<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shThemeDefault.css"/>
+<script type="text/javascript">
+	SyntaxHighlighter.config.clipboardSwf = '/jscripts/syntaxhighlighter/scripts/clipboard.swf';
+	SyntaxHighlighter.all();
+</script>
+{% endblock %}
+{% block content %}
+{% for blog in blogs %}
+<h3><a href="/blog/{{blog.key}}/show">{{blog.title}}</a></h3>
+<h4>{{blog.date|naturalday}}</h4>
+{{blog.content|safe}}
+{% if admin %}<ul class="inline_list"><li><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="end"><a href="/blog/{{blog.key}}/delete">删除</a></li></ul>{% endif %}
+<ul class="inline_list"><li>分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li><a href="/blog/{{blog.key}}/show">浏览({{blog.browsed_count}})</a></li><li class="end"><a href="/blog/{{blog.key}}/show#comments">评论({{blog.comment_set.count}})</a></li></ul>
+<hr>
+{% endfor %}
+{% endblock %}
