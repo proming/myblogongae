@@ -1,6 +1,10 @@
 # coding=UTF-8
 from google.appengine.ext import db
 
+class Configuration(db.Model):
+	title=db.StringProperty()
+	motto=db.StringProperty()
+
 class FriendlyURL(db.Model):
     name=db.StringProperty()
     URL=db.URLProperty()

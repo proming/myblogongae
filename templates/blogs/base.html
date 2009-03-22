@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>刘鲁杰的博客</title>
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"><head><title>{% if configuration %}{{configuration.title}}{% else %}博客未配置{% endif %}</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
 <!-- Framework CSS -->
 <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
@@ -28,7 +28,9 @@ text-align:right;
 {% if current_user %}
   <li>{{current_user.nickname}}</li>
 {% if admin %}
-  <li><a href="http://appengine.google.com/">管理</a></li>
+  {% if configuration %}<li><a href="/configuration/{{configuration.key}}/edit">配置</a></li>{% endif %}
+  <li><a href="http://appengine.google.com/" target="_blank">管理</a></li>
+  <li><a href="/_ah/admin" target="_blank">本地管理</a></li>
 {% endif %}
   <li class="end"><a href="{{logout_url}}">退出</a></li>
 {% else %}
@@ -36,8 +38,16 @@ text-align:right;
 {% endif %}
 </ul>
 <div id="title">
-<h1><a href="/">刘鲁杰的博客</a></h1>
-<h2>I like programming</h2>
+{% if configuration %}
+<h1><a href="/">{{configuration.title}}</a></h1>
+<h2>{{configuration.motto}}</h2>
+{% else %}
+{% if admin %}
+<a href="/configuration/new">新建配置</a>
+{% else %}
+博客未配置
+{% endif %}
+{% endif %}
 </div>
 <hr>
 <div class="span-5 colborder">

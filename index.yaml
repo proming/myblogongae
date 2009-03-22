@@ -10,7 +10,7 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 111 times in query history.
+# Used 35 times in query history.
 - kind: Archive
   properties:
   - name: year
@@ -18,7 +18,7 @@ indexes:
   - name: month
     direction: desc
 
-# Used 8 times in query history.
+# Unused in query history -- copied from input.
 - kind: Blog
   properties:
   - name: category
@@ -32,13 +32,13 @@ indexes:
   - name: date
     direction: desc
 
-# Used 226 times in query history.
+# Unused in query history -- copied from input.
 - kind: Blog
   properties:
   - name: date
     direction: desc
 
-# Used 3 times in query history.
+# Unused in query history -- copied from input.
 - kind: Blog
   properties:
   - name: month
@@ -53,7 +53,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 93 times in query history.
+# Used 2 times in query history.
 - kind: Comment
   properties:
   - name: blog
@@ -66,7 +66,7 @@ indexes:
   - name: date
     direction: desc
 
-# Used 407 times in query history.
+# Unused in query history -- copied from input.
 - kind: Comment
   properties:
   - name: date
