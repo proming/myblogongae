@@ -34,10 +34,15 @@ var SyntaxHLDialog = {
 		if(f.syntaxhl_highlight.value != '') {
 			options += 'highlight: [' + f.syntaxhl_highlight.value + ']; ';
 		}
-		
+		/*escape code's HTML */
+		codeText=f.syntaxhl_code.value.replace(/</g,"&lt;");
+		codeText.replace(/>/g,"&gt;");
+		codeText.replace(/'/g,"&#39;");
+		codeText.replace(/"/g,"&quot;");
+		codeText.replace(/&/g,"&amp;");
 		textarea_output = '<pre class="brush: ';
 		textarea_output += f.syntaxhl_language.value + ';' + options + '">';
-		textarea_output +=  f.syntaxhl_code.value;
+		textarea_output +=  codeText;
 		textarea_output += '</pre> '; /* note space at the end, had a bug it was inserting twice? */
 		tinyMCEPopup.editor.execCommand('mceInsertContent', false, textarea_output);
 		tinyMCEPopup.close();
