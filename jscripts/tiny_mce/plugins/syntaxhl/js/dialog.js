@@ -42,7 +42,7 @@ var SyntaxHLDialog = {
 		codeText.replace(/&/g,"&amp;");
 		textarea_output = '<pre class="brush: ';
 		textarea_output += f.syntaxhl_language.value + ';' + options + '">';
-		textarea_output +=  codeText;
+		textarea_output += codeText;
 		textarea_output += '</pre> '; /* note space at the end, had a bug it was inserting twice? */
 		tinyMCEPopup.editor.execCommand('mceInsertContent', false, textarea_output);
 		tinyMCEPopup.close();
