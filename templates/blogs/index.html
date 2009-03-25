@@ -19,7 +19,7 @@ margin-bottom:15px;
 {% for blog in blogs %}
 <h3><a href="/blog/{{blog.key}}/show">{{blog.title}}</a></h3>
 <h4>{{blog.date|naturalday}}</h4>
-{{blog.content|removetags:"img object param"|safe}}
+{{blog.content|removetags:"img object param embed"|safe}}
 {% if admin %}<ul class="inline_list"><li><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="end"><a href="/blog/{{blog.key}}/delete">删除</a></li></ul>{% endif %}
 <ul class="inline_list"><li>分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li><a href="/blog/{{blog.key}}/show">浏览({{blog.browsed_count}})</a></li><li class="end"><a href="/blog/{{blog.key}}/show#comments">评论({{blog.comment_set.count}})</a></li></ul>
 <hr>
