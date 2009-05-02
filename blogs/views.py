@@ -117,6 +117,7 @@ def update(request, key):
     form.fields['category'].choices = [('', '请选择')] + [(category.key(), category.name) for category in Category.all()]
     if form.is_valid():
         blog = Blog.get(key)
+        blog_category_db=blog.category
         blog.title = form.cleaned_data['title']
         blog.content = form.cleaned_data['content']
         if form.cleaned_data['category']:
@@ -126,6 +127,8 @@ def update(request, key):
         else:
             blog.category = None
         blog.put()
+        if blog_category_db and blog_category_db.blog_set.count() == 0:
+            blog_category_db.delete()
         return HttpResponseRedirect('/blogs')
     else:
         return edit(request, key)
@@ -136,11 +139,14 @@ def delete(request, key):
     blog = Blog.get(key)
     Comment.batch_delete(blog.comment_set)
     archive = Archive.all().filter('year', blog.year).filter('month', blog.month).fetch(1)
-    archive[0].weblog_count -= 1
-    archive[0].put()
-    if archive[0].weblog_count == 0:
-        archive[0].delete()
+    if len(archive) > 0:
+        archive[0].weblog_count -= 1
+        archive[0].put()
+        if archive[0].weblog_count == 0:
+            archive[0].delete()
     blog.delete()
+    if blog.category and blog.category.blog_set.count() == 0:
+        blog.category.delete()
     return HttpResponseRedirect('/blogs')
 
 def createComment(request, blog_key):
