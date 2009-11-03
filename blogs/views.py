@@ -4,10 +4,10 @@ from google.appengine.ext.db import GqlQuery
 from google.appengine.api import users
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader, Context
-import logging
+import logging 
 import math
-from models import Blog, Category, Archive, Comment, FriendlyURL
-from forms import BlogForm, CommentForm, URLForm
+from models import Configuration, Blog, Category, Archive, Comment, FriendlyURL
+from forms import BlogForm, CommentForm, URLForm, ConfigurationForm
 
 def base_context():
     context = Context({
@@ -21,6 +21,9 @@ def base_context():
         'archives':Archive.all().order('-year').order('-month'),
         'friendlyURLs':FriendlyURL.all()
     })
+    configuration=Configuration.all().fetch(1)
+    if configuration:
+        context.configuration=configuration[0]
     return context
 
 def index(request):
@@ -201,6 +204,8 @@ def update(request, key):
         else:
             blog.category = None
         blog.put()
+        if blog_category_db and blog_category_db.blog_set.count() == 0:
+            blog_category_db.delete()
         return HttpResponseRedirect('/blogs')
     else:
         return edit(request, key)
@@ -216,6 +221,8 @@ def delete(request, key):
     if archive[0].weblog_count == 0:
         archive[0].delete()
     blog.delete()
+    if blog.category and blog.category.blog_set.count() == 0:
+        blog.category.delete()
     return HttpResponseRedirect('/blogs')
 
 def createComment(request, blog_key):
@@ -305,6 +312,60 @@ def deleteURL(request, key):
     friendlyURL = FriendlyURL.get(key)
     friendlyURL.delete()
     return HttpResponseRedirect('/blogs')
+
+def newConfiguration(request):
+    context = base_context()
+    if not admin():
+        return HttpResponseRedirect(users.create_login_Configuration('/blogs'))
+    if request.method == 'POST':
+        form = ConfigurationForm(request.POST)
+    else:
+        form = ConfigurationForm()
+    context.form = form
+    template = loader.get_template('blogs/newConfiguration.html')
+    return HttpResponse(template.render(context))
+
+def createConfiguration(request):
+    if not admin():
+        return HttpResponseRedirect(users.create_login_Configuration('/blogs'))
+    form = ConfigurationForm(request.POST)
+    if form.is_valid():
+        configuration = Configuration()
+        configuration.title = form.cleaned_data['title']
+        configuration.motto = form.cleaned_data['motto']
+        configuration.put()
+        return HttpResponseRedirect('/blogs')
+    else:
+        return newConfiguration(request)
+
+def editConfiguration(request, key):
+    context = base_context()
+    if not admin():
+        return HttpResponseRedirect(users.create_login_Configuration('/blogs'))
+    configuration = Configuration.get(key)
+    if request.method == 'POST':
+        form = ConfigurationForm(request.POST)
+    else:
+        form = ConfigurationForm()
+    form.fields['title'].initial = configuration.title  
+    form.fields['motto'].initial = configuration.motto
+    context.configuration = configuration
+    context.form = form
+    template = loader.get_template('blogs/editConfiguration.html')
+    return HttpResponse(template.render(context))
+
+def updateConfiguration(request, key):
+    if not admin():
+        return HttpResponseRedirect(users.create_login_Configuration('/blogs'))
+    form = ConfigurationForm(request.POST)
+    if form.is_valid():
+        configuration = Configuration.get(key)
+        configuration.title = form.cleaned_data['title']
+        configuration.motto = form.cleaned_data['motto']
+        configuration.put()
+        return HttpResponseRedirect('/blogs')
+    else:
+        return editConfiguration(request, key)
 
 def admin():
     return users.is_current_user_admin()

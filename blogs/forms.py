@@ -13,3 +13,7 @@ class CommentForm(forms.Form):
 class URLForm(forms.Form):
     name=forms.CharField(label='链接名称',required=True)
     URL=forms.URLField(label='链接地址',required=True)
+
+class ConfigurationForm(forms.Form):
+    title=forms.CharField(label='博客标题',required=True)
+    motto=forms.CharField(label='座右铭',required=True)

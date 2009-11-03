@@ -1,7 +1,7 @@
 {% extends "blogs/base.html" %}
 {% block content %}
 <div>
-<form action="/url/create" method="post">
+<form action="/configuration/{{configuration.key}}/update" method="post">
 {{form.as_p}}
 <input type="submit" value="提交"/>
 </form>
