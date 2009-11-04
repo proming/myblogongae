@@ -333,6 +333,7 @@ def createConfiguration(request):
         configuration = Configuration()
         configuration.title = form.cleaned_data['title']
         configuration.motto = form.cleaned_data['motto']
+        configuration.pagesize = form.cleaned_data['pagesize']
         configuration.put()
         return HttpResponseRedirect('/blogs')
     else:
@@ -349,6 +350,7 @@ def editConfiguration(request, key):
         form = ConfigurationForm()
     form.fields['title'].initial = configuration.title  
     form.fields['motto'].initial = configuration.motto
+    form.fields['pagesize'].initial = configuration.pagesize
     context.configuration = configuration
     context.form = form
     template = loader.get_template('blogs/editConfiguration.html')
@@ -362,6 +364,7 @@ def updateConfiguration(request, key):
         configuration = Configuration.get(key)
         configuration.title = form.cleaned_data['title']
         configuration.motto = form.cleaned_data['motto']
+        configuration.pagesize = form.cleaned_data['pagesize']
         configuration.put()
         return HttpResponseRedirect('/blogs')
     else:
@@ -372,5 +375,9 @@ def admin():
 
 def current_user():
     return users.get_current_user()def record_per_page():
-    return 3
+    context = base_context();
+    if context.configuration:
+        return context.configuration.pagesize
+    else:
+        return 3
 

@@ -17,3 +17,6 @@ class URLForm(forms.Form):
 class ConfigurationForm(forms.Form):
     title=forms.CharField(label='博客标题',required=True)
     motto=forms.CharField(label='座右铭',required=True)
+    pagesize=forms.IntegerField(label='页面日志数',min_value=3,required=True)
+
+

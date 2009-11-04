@@ -4,6 +4,7 @@ from google.appengine.ext import db
 class Configuration(db.Model):
 	title=db.StringProperty()
 	motto=db.StringProperty()
+	pagesize=db.IntegerProperty()
 
 class FriendlyURL(db.Model):
     name=db.StringProperty()
