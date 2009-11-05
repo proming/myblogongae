@@ -24,6 +24,8 @@ def base_context():
     configuration=Configuration.all().fetch(1)
     if configuration:
         context.configuration=configuration[0]
+    else:
+        context.configuration=False
     return context
 
 def index(request):
@@ -62,7 +64,7 @@ def show_by_archive(request, year, month):
     rpp = record_per_page()
     cur_page = 1
     if request != '' and request.method == 'POST':
-        cur_page = int(request.POST['jumpPage'])
+        cur_page = int(request.POST['jumpPage'].strip())
     else:
         cur_page = 1
     
@@ -75,7 +77,7 @@ def show_by_archive(request, year, month):
     if cur_page > max_page or cur_page <= 0:
         cur_page = max_page
         
-    if cur_page > max_page:
+    if  cur_page == 0 or cur_page > max_page:
         cur_page = max_page
         blogs = Blog.all().filter('year', int(year)).filter('month', int(month)).order('-date').fetch(0);
     else:
@@ -96,7 +98,7 @@ def show_by_category(request, key):
     rpp = record_per_page()
     cur_page = 1
     if request != '' and request.method == 'POST':
-        cur_page = int(request.POST['jumpPage'])
+        cur_page = int(request.POST['jumpPage'].strip())
     else:
         cur_page = 1
     
@@ -109,7 +111,7 @@ def show_by_category(request, key):
     if cur_page > max_page or cur_page <= 0:
         cur_page = max_page
     
-    if cur_page > max_page:
+    if cur_page == 0 or cur_page > max_page:
         cur_page = max_page
         blogs = Blog.all().filter('category', Category.get(key)).order('-date').fetch(0); 
     else:

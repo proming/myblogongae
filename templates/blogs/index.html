@@ -10,10 +10,12 @@ margin-bottom:15px;
 <script type="text/javascript" src="/jscripts/syntaxhighlighter/scripts/shAllSyntax.js"></script>
 <script type="text/javascript" src="/jscripts/page.js"></script>
 <link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shCore.css"/>
-<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shThemeDefault.css"/>
+<link type="text/css" rel="stylesheet" href="/jscripts/syntaxhighlighter/styles/shCore.css"/>
+<link type="text/css" rel="stylesheet" href="/stylesheets/page.css"/>
 <script text="JavaScript">
 	SyntaxHighlighter.config.clipboardSwf = '/jscripts/syntaxhighlighter/scripts/clipboard.swf';
 	SyntaxHighlighter.all();
+  max_page={{max_page}};
 </script>
 {% endblock %}
 {% block content %}
@@ -26,42 +28,43 @@ margin-bottom:15px;
 <hr>
 {% endfor %}
 
-<div>
-<form action="{{action_mode}}" method="post" name="pageForm">
-
-第{{cur_page}}页
-共{{max_page}}页
-<BR>
-{% ifequal cur_page 1 %}
- 首页 上一页 
-{% endifequal %}
-{% ifequal cur_page 0 %}
- 首页 上一页 
-{% endifequal %}
-{% ifnotequal cur_page 1 %}
-{% ifnotequal cur_page 0 %}
-<A HREF="javascript:gotoPage(1)">首页</A>
-<A HREF="javascript:gotoPage({{up_page}})">上一页</A>
-{% endifnotequal %}
-{% endifnotequal %}
-{% ifequal cur_page max_page %}
-下一页 尾页
-{% endifequal %}
-{% ifnotequal cur_page max_page %}
-<A HREF="javascript:gotoPage({{down_page}})">下一页</A>
-<A HREF="javascript:gotoPage({{max_page}})">尾页</A>
-{% endifnotequal %}
-转到第<SELECT name="jump" onchange="Jumping()">
-     {% for i in range1 %}
-     {% ifequal cur_page i %}
-        <OPTION value={{i}} selected>{{i}}</OPTION>
-     {% endifequal %}
-     {% ifnotequal cur_page i %}
-        <OPTION value={{i}}>{{i}}</OPTION>
-     {% endifnotequal %}
-     {% endfor %}  
-     </SELECT>页
-<input name="jumpPage" type="hidden">
-</form>
+<div class="pageOption">
+  <form action="{{action_mode}}" method="post" name="pageForm">
+    {% ifequal cur_page 1 %}
+    <div class="firstPage_no">首页</div>
+    <div class="pageUp_no">上页</div>
+    {% endifequal %}
+    {% ifequal cur_page 0 %}
+    <div class="firstPage_no">首页</div>
+    <div class="pageUp_no">上页</div>
+    {% endifequal %}
+    {% ifnotequal cur_page 1 %}
+    {% ifnotequal cur_page 0 %}
+    <div class="firstPage" onclick="gotoPage(1)">首页</div>
+    <div class="pageUp" onclick="gotoPage({{up_page}})">上页</div>
+    {% endifnotequal %}
+    {% endifnotequal %}
+    <div>　第</div>
+    <div class="currentPage">
+      <input name="jumpPage" class="pageInput" type="text" value="{{cur_page}}"/>
+      {% ifequal cur_page 0 %}
+        <div class="jumpPage_no">Go</div>
+      {% endifequal %}
+      {% ifnotequal cur_page 0 %}
+        <div class="jumpPage" onclick="Jumping()">Go</div>
+      {% endifnotequal %}
+    </div>
+    <div>页/共</div>
+    <div>{{max_page}}</div>
+    <div>页　</div>
+    {% ifequal cur_page max_page %}
+    <div class="pageDown_no">下页</div>
+    <div class="lastPage_no">尾页</div>
+    {% endifequal %}
+    {% ifnotequal cur_page max_page %}
+    <div class="pageDown" onclick="gotoPage({{down_page}})">下页</div>
+    <div class="lastPage" onclick="gotoPage({{max_page}})">尾页</div>
+    {% endifnotequal %}
+  </form>
 </div>
 {% endblock %}

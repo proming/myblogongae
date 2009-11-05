@@ -1,5 +1,12 @@
 function Jumping(){
-	document.pageForm.jumpPage.value = document.pageForm.jump.value;
+  var jumpPage = document.pageForm.jumpPage.value;
+  if(isNaN(jumpPage)) {
+    document.pageForm.jumpPage.value = 1;
+    jumpPage = 1;
+  }
+  if(parseInt(jumpPage) >= max_page) {
+	  document.pageForm.jumpPage.value = max_page;
+  }
   document.pageForm.submit();
   return ;
 }
