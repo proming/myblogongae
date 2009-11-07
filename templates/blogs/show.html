@@ -35,19 +35,16 @@ function submit_comment(){
 <h3><a href="/blog/{{blog.key}}/show">{{blog.title}}</a></h3>
 <h4>{{blog.date|naturalday}}</h4>
 {{blog.content|safe}}
-{% if admin %}<ul class="inline_list"><li><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="end"><a href="/blog/{{blog.key}}/delete">删除</a></li></ul>{% endif %}
-<ul class="inline_list"><li>分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li>浏览({{blog.browsed_count}})</li><li class="end">评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li></ul>
-<div id="comments">
+
+<ul class="inline_list"><li class="category">分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li class="read">浏览({{blog.browsed_count}})</li><li class="comments">评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li>{% if admin %}<li class="edit"><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="delete"><a href="/blog/{{blog.key}}/delete">删除</a></li>{% endif %}</ul>
+<br>
+<div>
 {% for comment in comments %}
 {% include "blogs/_comment.html" %}
 {% endfor %}
 </div>
-{% if current_user %}
 <div id="hint" style="display: none;"></div>
 <p>{{ form.content.label_tag }}</p>
 <p>{{ form.content }}</p>
 <input type="button" value="提交" onclick="submit_comment();"/>
-{% else %}
-<div>您还没有登录!请<a href="{{login_url}}">登录</a>后发表评论</div>
-{% endif %}
 {% endblock %}

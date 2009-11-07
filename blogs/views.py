@@ -228,8 +228,6 @@ def delete(request, key):
     return HttpResponseRedirect('/blogs')
 
 def createComment(request, blog_key):
-    if not current_user():
-        return HttpResponseRedirect(users.create_login_url('/blogs'))
     form = CommentForm(request.POST)
     if form.is_valid():
         comment = Comment()

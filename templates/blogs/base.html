@@ -4,6 +4,7 @@
 <!-- Framework CSS -->
 <link rel="stylesheet" href="/stylesheets/blueprint/screen.css" type="text/css" media="screen, projection">
 <link rel="stylesheet" href="/stylesheets/blueprint/print.css" type="text/css" media="print">
+<link type="text/css" rel="stylesheet" href="/stylesheets/page.css"/>
 <!--[if IE]><link rel="stylesheet" href="/stylesheets/blueprint/ie.css" type="text/css" media="screen, projection"><![endif]-->
 <style type="text/css">
 #title{
@@ -14,7 +15,6 @@ padding: 0px;
 }
 .inline_list li {
   display: inline;
-  padding: 0 5px;
 }
 #user_nav{
 text-align:right;
@@ -49,8 +49,8 @@ text-align:right;
 {% endif %}
 {% endif %}
 </div>
-<hr>
-<div class="span-5 colborder">
+<div class="leftBorder">
+<div  class="leftTopBorder"></div>
 {% if admin %}
 <h3><a href="/blog/new">发表新文章</a></h3>
 {% endif %}
@@ -75,7 +75,7 @@ text-align:right;
   </li>
 {% endfor %}
 </ul>
-<h3>{% if admin %}<a href="/url/new">新建链接</a>{% endif %}</h3>
+{% if admin %}<h3><a href="/url/new">新建链接</a></h3>{% endif %}
 <h3>链接</h3>
 <ul>
 {% for friendlyURL in friendlyURLs %}
@@ -91,17 +91,26 @@ text-align:right;
 </ul>
 </div>
 <!--span-5 colborder-->
-<div class="span-17 last">
-{% block content %}{% endblock %}
 
+<div class="rightContainer">
+<div style="margin: 0pt 4px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 2px; margin: 0pt 2px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 1px; margin: 0pt 1px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 1px; margin: 0pt 1px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div class="rightBorder">
+{% block content %}{% endblock %}
+</div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 1px; margin: 0pt 1px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 1px; margin: 0pt 1px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="border-style: solid; border-color: rgb(219, 238, 255); border-width: 0pt 2px; margin: 0pt 2px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
+<div style="margin: 0pt 4px; background: rgb(219, 238, 255) none repeat scroll 0% 0%; overflow: hidden; -moz-background-clip: border; -moz-background-origin: padding; -moz-background-inline-policy: continuous; height: 1px;"></div>
 </div>
 
-<hr>
+</div><!--container-->
 <div align="middle">
 Copyright© 2008 - 2009 <a href="http://llj.appspot.com" target="_blank">qubicllj@gmail.com</a>.All Rights Reserved
-<p><br>
+<br>
 <img src="http://code.google.com/appengine/images/appengine-silver-120x30.gif" alt="Google App Engine 支持" />
 </div>
-</div><!--container-->
 </body>
 </html>

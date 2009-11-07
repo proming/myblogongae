@@ -1,116 +1,185 @@
+body {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:#FFFFFF url(../images/Linux5.png) no-repeat fixed right bottom;
+  font-family:Arial,Helvetica,sans-serif;
+}
+h3 {
+  -moz-background-clip:border;
+  -moz-background-inline-policy:continuous;
+  -moz-background-origin:padding;
+  background:#DBEEFF none repeat scroll 0 0;
+  font-size:14px;
+  height:24px;
+  line-height:24px;
+  padding-left:8px;
+  text-align:left;
+}
+a:hover {
+  color:#6EA315;
+  cursor:pointer;
+  text-decoration:underline;
+}
+a {
+  color:#145CA6;
+  cursor:pointer;
+  text-decoration:none;
+}
+.container {
+  margin:0 auto;
+  width:970px;
+}
+.leftTopBorder {
+  background:#F5FBFF url(../images/widgettop.gif) no-repeat scroll center top;
+  width:250px;
+  margin-right:10px;
+  padding-top:15px;
+}
+.leftBorder {
+  background:#F5FBFF url(../images/widgetbottom.gif) no-repeat scroll center bottom;
+  width:250px;
+  float:left;
+  margin-right:10px;
+  padding-bottom:15px;
+}
+.rightContainer {
+  float:left;
+  width:710px;
+}
+.rightBorder {
+  border-style: solid; 
+  border-color: rgb(219, 238, 255); 
+  border-width: 0pt 3px;
+}
+.inline_list {
+  margin:0 1.5em 0;
+}
+.inline_list a {
+  color:#6EA315;
+}
+.contentdiv{
+  margin-left:10px;
+}
+.category {
+  background:transparent url(../images/category.png) no-repeat scroll;
+  padding:0 5px 0 16px;
+}
+.read {
+  background:transparent url(../images/read.png) no-repeat scroll;
+  padding:0 5px 0 16px;
+}
+.comments {
+  background:transparent url(../images/comments.png) no-repeat scroll;
+  padding:0 5px 0 16px;
+}
+.edit {
+  background:transparent url(../images/edit.png) no-repeat scroll;
+  padding:0 5px 0 16px;
+}
+.delete {
+  background:transparent url(../images/delete.png) no-repeat scroll;
+  padding:0 5px 0 16px;
+}
+.pageOption {
+  height:32px;
+  padding-top:10px;
+}
 .pageOption div
 {
   float:left;
-  line-height:32px;
-  font-size:14pt
+  line-height:24px;
+  font-size:12pt;
+  overflow:hidden;
 }
 .currentPage {
   border:1px solid #CCCCCC;
-  float:left;
-  height:28px;
+  height:20px;
   overflow:hidden;
+  margin-top:2px;
 }
 .pageInput
 {
   border:medium none;
   display:block;
   float:left;
-  height:24px;
+  height:18px;
   overflow:hidden;
-  font-size:14pt;
-  padding:3px 0 0 4px;
+  font-size:12pt;
+  padding:0px 0 0 4px;
   width:30px;
 }
 .firstPage
 {
   background:transparent url(../images/go-first.png) no-repeat scroll;
   cursor:pointer;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .firstPage_no
 {
   background:transparent url(../images/go-first-no.png) no-repeat scroll;
   height:32px;
-  float:left;
-  overflow:hidden;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .pageUp
 {
   background:transparent url(../images/go-previous.png) no-repeat scroll;
   cursor:pointer;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .pageUp_no
 {
   background:transparent url(../images/go-previous-no.png) no-repeat scroll;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
-}.pageDown
+  width:24px;
+}
+.pageDown
 {
   background:transparent url(../images/go-next.png) no-repeat scroll;
   cursor:pointer;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .pageDown_no
 {
   background:transparent url(../images/go-next-no.png) no-repeat scroll;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
-}.lastPage
+  width:24px;
+}
+.lastPage
 {
   background:transparent url(../images/go-last.png) no-repeat scroll;
   cursor:pointer;
-  height:32px;
-  float:left;
-  overflow:hidden;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .lastPage_no
 {
   background:transparent url(../images/go-last-no.png) no-repeat scroll;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
+  width:24px;
 }
 .jumpPage
 {
   background:transparent url(../images/go-jump.png) no-repeat scroll -1px -3px;
   cursor:pointer;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:30px;
+  width:22px;
 }
 .jumpPage_no
 {
   background:transparent url(../images/go-jump-no.png) no-repeat scroll -1px -3px;
-  height:32px;
-  float:left;
-  overflow:hidden;
+  height:24px;
   text-indent:-999em;
-  width:32px;
+  width:22px;
 }
