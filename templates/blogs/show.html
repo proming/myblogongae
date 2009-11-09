@@ -34,7 +34,7 @@ function submit_comment(){
 {% block content %}
 <h3><a href="/blog/{{blog.key}}/show">{{blog.title}}</a></h3>
 <h4>{{blog.date|naturalday}}</h4>
-{{blog.content|safe}}
+<div class="contentdiv">{{blog.content|safe}}</div>
 
 <ul class="inline_list"><li class="category">分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li class="read">浏览({{blog.browsed_count}})</li><li class="comments">评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li>{% if admin %}<li class="edit"><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="delete"><a href="/blog/{{blog.key}}/delete">删除</a></li>{% endif %}</ul>
 <br>
