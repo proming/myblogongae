@@ -206,9 +206,6 @@ def update(request, key):
         else:
             blog.category = None
         blog.put()
-        if blog_category_db and blog_category_db.blog_set.count() == 0:
-            blog_category_db.delete()
-        return HttpResponseRedirect('/blogs')
     else:
         return edit(request, key)
 
