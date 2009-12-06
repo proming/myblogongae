@@ -45,7 +45,7 @@ a {
 }
 .rightContainer {
   float:left;
-  width:710px;
+  width:680px;
 }
 .rightBorder {
   border-style: solid; 
@@ -82,104 +82,11 @@ a {
   padding:0 5px 0 16px;
 }
 .pageOption {
-  height:32px;
-  padding-top:10px;
+  margin-top:10px;
 }
-.pageOption div
-{
-  float:left;
+.pageOption .pageText{
+  font-size:12pt;
   line-height:24px;
-  font-size:12pt;
-  overflow:hidden;
+  display:inline;
 }
-.currentPage {
-  border:1px solid #CCCCCC;
-  height:20px;
-  overflow:hidden;
-  margin-top:2px;
-}
-.pageInput
-{
-  border:medium none;
-  display:block;
-  float:left;
-  height:18px;
-  overflow:hidden;
-  font-size:12pt;
-  padding:0px 0 0 4px;
-  width:30px;
-}
-.firstPage
-{
-  background:transparent url(../images/go-first.png) no-repeat scroll;
-  cursor:pointer;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.firstPage_no
-{
-  background:transparent url(../images/go-first-no.png) no-repeat scroll;
-  height:32px;
-  text-indent:-999em;
-  width:24px;
-}
-.pageUp
-{
-  background:transparent url(../images/go-previous.png) no-repeat scroll;
-  cursor:pointer;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.pageUp_no
-{
-  background:transparent url(../images/go-previous-no.png) no-repeat scroll;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.pageDown
-{
-  background:transparent url(../images/go-next.png) no-repeat scroll;
-  cursor:pointer;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.pageDown_no
-{
-  background:transparent url(../images/go-next-no.png) no-repeat scroll;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.lastPage
-{
-  background:transparent url(../images/go-last.png) no-repeat scroll;
-  cursor:pointer;
-  text-indent:-999em;
-  width:24px;
-}
-.lastPage_no
-{
-  background:transparent url(../images/go-last-no.png) no-repeat scroll;
-  height:24px;
-  text-indent:-999em;
-  width:24px;
-}
-.jumpPage
-{
-  background:transparent url(../images/go-jump.png) no-repeat scroll -1px -3px;
-  cursor:pointer;
-  height:24px;
-  text-indent:-999em;
-  width:22px;
-}
-.jumpPage_no
-{
-  background:transparent url(../images/go-jump-no.png) no-repeat scroll -1px -3px;
-  height:24px;
-  text-indent:-999em;
-  width:22px;
-}
+

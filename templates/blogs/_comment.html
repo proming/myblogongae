@@ -1,4 +1,4 @@
 {% load humanize %}
-<div>{{comment.author}}发表于{{comment.date|naturalday}}</div>
+<div>{{comment.author}}({{comment.email}})发表于{{comment.date|naturalday}}</div>
 {{comment.content|linebreaks}}
 {% if admin %}<div><a href="/blog/{{blog.key}}/comment/{{comment.key}}/delete">删除</a></div>{% endif %}

@@ -71,7 +71,7 @@ text-align:right;
 {% for comment in recent_comments %}
   <li>
     <h4>{{comment.content}}</h4>
-    <h4>{{comment.author.nickname}}对文章:<a href="/blog/{{comment.blog.key}}/show">{{comment.blog.title}}</a>的评论</h4>
+    <h4>{{comment.author}}对文章:<a href="/blog/{{comment.blog.key}}/show">{{comment.blog.title}}</a>的评论</h4>
   </li>
 {% endfor %}
 </ul>

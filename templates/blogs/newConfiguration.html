@@ -2,12 +2,9 @@
 {% block content %}
 <div>
 <form action="/configuration/create" method="post">
-    {% for field in form %}
-        <div class="fieldWrapper">
-            {{ field.errors }}
-            {{ field.label_tag }}: {{ field }}
-        </div>
-    {% endfor %}
+  <table>
+    {{form.as_table}}
+  </table>
 <input type="submit" value="提交"/>
 </form>
 </div>

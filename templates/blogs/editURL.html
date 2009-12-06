@@ -2,7 +2,9 @@
 {% block content %}
 <div>
 <form action="/url/{{friendlyURL.key}}/update" method="post">
-{{form.as_p}}
+  <table>
+    {{form.as_table}}
+  </table>
 <input type="submit" value="提交"/>
 </form>
 </div>

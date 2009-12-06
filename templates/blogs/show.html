@@ -11,19 +11,25 @@ SyntaxHighlighter.config.clipboardSwf = '/jscripts/syntaxhighlighter/scripts/cli
 SyntaxHighlighter.all();
 function submit_comment(){
 	$.post('/blog/{{blog.key}}/comment/create',
-			{content:$('#id_content').val()},
-			function(data){
-				if(data!=''){
-					$('#comments').append(data);
-					$('#comments_count').html(Number($('#comments_count').html())+1);
-					$('#id_content').val('');
-					$('#hint').html('您提交了一条评论');
-					$('#hint').slideDown('slow');
-					$('#hint').hide(3000);
-				}else{
-					$('#hint').html('请填写内容再提交');
-					$('#hint').slideDown('slow');
-					$('#hint').hide(3000);
+			{author:$('#id_author').val(),
+			email:$('#id_email').val(),
+			content:$('#id_content').val()},
+			function(data, textStatus){
+			  if(textStatus == 'success') {
+			    var result = JSON.parse(data);
+				  if(result.msg == 1){
+					  $('#comments').append(result.data);
+					  $('#comments_count').html(Number($('#comments_count').html())+1);
+					  $('#id_author').val('');
+					  $('#id_email').val('');
+					  $('#id_content').val('');
+					  $('#hint').html('您提交了一条评论');
+					  $('#hint').slideDown('slow');
+					  $('#hint').hide(3000);
+				  }else{
+					  $('#hint').html(result.data);
+					  $('#hint').slideDown('slow');
+				  }
 				}
 			}
 	);
@@ -36,15 +42,16 @@ function submit_comment(){
 <h4>{{blog.date|naturalday}}</h4>
 <div class="contentdiv">{{blog.content|safe}}</div>
 
-<ul class="inline_list"><li class="category">分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li class="read">浏览({{blog.browsed_count}})</li><li class="comments">评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li>{% if admin %}<li class="edit"><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="delete"><a href="/blog/{{blog.key}}/delete">删除</a></li>{% endif %}</ul>
+<ul class="inline_list"><li class="category">分类(<a href="/category/{{blog.category.key}}/show">{{blog.category.name}}</a>)</li><li class="read">浏览({{blog.browsed_count}})</li><li>评论(<span id="comments_count">{{blog.comment_set.count}}</span>)</li>{% if admin %}<li class="edit"><a href="/blog/{{blog.key}}/edit">编辑</a></li><li class="delete"><a href="/blog/{{blog.key}}/delete">删除</a></li>{% endif %}</ul>
 <br>
-<div>
+<div id="comments">
 {% for comment in comments %}
 {% include "blogs/_comment.html" %}
 {% endfor %}
 </div>
 <div id="hint" style="display: none;"></div>
-<p>{{ form.content.label_tag }}</p>
-<p>{{ form.content }}</p>
+<p>{{ form.author.label_tag }}:{{ form.author }}</p>
+<p>{{ form.email.label_tag }}:{{ form.email }}</p>
+<p>{{ form.content.label_tag }}<br>{{ form.content }}</p>
 <input type="button" value="提交" onclick="submit_comment();"/>
 {% endblock %}

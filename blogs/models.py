@@ -46,7 +46,8 @@ class Blog(db.Model):
 
 class Comment(db.Model):
     blog = db.ReferenceProperty(Blog)
-    author = db.UserProperty()
+    author = db.StringProperty()
+    email = db.EmailProperty()
     content = db.TextProperty()
     date = db.DateTimeProperty(auto_now_add=True)
     

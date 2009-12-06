@@ -8,6 +8,7 @@ import logging
 import math
 from models import Configuration, Blog, Category, Archive, Comment, FriendlyURL
 from forms import BlogForm, CommentForm, URLForm, ConfigurationForm
+from django.utils import simplejson as json
 
 def base_context():
     context = Context({
@@ -32,10 +33,10 @@ def index(request):
     context = base_context()
     rpp = record_per_page()
     cur_page = 1
-    if request != '' and request.method == 'POST':
-        cur_page = int(request.POST['jumpPage'])
-    else:
-        cur_page = 1
+    try:
+      cur_page = int(request.REQUEST['jumpPage'].strip())
+    except:
+      cur_page = 1
     
     blogs_count = Blog.all().count()
     max_page = blogs_count / rpp
@@ -63,10 +64,10 @@ def show_by_archive(request, year, month):
     context = base_context()
     rpp = record_per_page()
     cur_page = 1
-    if request != '' and request.method == 'POST':
-        cur_page = int(request.POST['jumpPage'].strip())
-    else:
-        cur_page = 1
+    try:
+      cur_page = int(request.REQUEST['jumpPage'].strip())
+    except:
+      cur_page = 1
     
     blogs_count = Blog.all().filter('year', int(year)).filter('month', int(month)).count()
     max_page = blogs_count / rpp
@@ -97,10 +98,10 @@ def show_by_category(request, key):
     context = base_context()
     rpp = record_per_page()
     cur_page = 1
-    if request != '' and request.method == 'POST':
-        cur_page = int(request.POST['jumpPage'].strip())
-    else:
-        cur_page = 1
+    try:
+      cur_page = int(request.REQUEST['jumpPage'].strip())
+    except:
+      cur_page = 1
     
     blogs_count = Blog.all().filter('category', Category.get(key)).count()
     max_page = blogs_count / rpp
@@ -206,6 +207,7 @@ def update(request, key):
         else:
             blog.category = None
         blog.put()
+        return show(request, key)
     else:
         return edit(request, key)
 
@@ -229,7 +231,8 @@ def createComment(request, blog_key):
     if form.is_valid():
         comment = Comment()
         comment.blog = Blog.get(blog_key)
-        comment.author = current_user()
+        comment.author = form.cleaned_data['author']
+        comment.email = form.cleaned_data['email']
         comment.content = form.cleaned_data['content']
         comment.put()
         context = Context({
@@ -238,9 +241,25 @@ def createComment(request, blog_key):
             'admin':admin(),
         })
         template = loader.get_template('blogs/_comment.html')
-        return HttpResponse(template.render(context))
+        reponse = dict(
+            msg = 1,
+            data = template.render(context)
+          )
+        return HttpResponse(json.dumps(reponse),mimetype='application/json')
     else:
-        return HttpResponse('')
+        data = ''
+        for errItem in form.errors.items():
+          errTitle = str(errItem[0])
+          errContent = errItem[1].as_text()
+          if data == '':
+            data = '<div>' + errTitle + ':' + errContent + '</div>'
+          else:
+            data = '\n<div>' + errTitle + ':' + errContent + '</div>'
+        reponse = dict(
+            msg = 0,
+            data = data
+          )
+        return HttpResponse(json.dumps(reponse),mimetype='application/json')
 
 def deleteComment(request, blog_key, comment_key):
     if not admin():

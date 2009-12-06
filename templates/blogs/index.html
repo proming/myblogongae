@@ -27,42 +27,28 @@ margin-bottom:15px;
 {% endfor %}
 
 <div class="pageOption">
-  <form action="{{action_mode}}" method="post" name="pageForm">
-    {% ifequal cur_page 1 %}
-    <div class="firstPage_no">首页</div>
-    <div class="pageUp_no">上页</div>
-    {% endifequal %}
-    {% ifequal cur_page 0 %}
-    <div class="firstPage_no">首页</div>
-    <div class="pageUp_no">上页</div>
-    {% endifequal %}
-    {% ifnotequal cur_page 1 %}
-    {% ifnotequal cur_page 0 %}
-    <div class="firstPage" onclick="gotoPage(1)">首页</div>
-    <div class="pageUp" onclick="gotoPage({{up_page}})">上页</div>
-    {% endifnotequal %}
-    {% endifnotequal %}
-    <div>　第</div>
-    <div class="currentPage">
-      <input name="jumpPage" class="pageInput" type="text" value="{{cur_page}}"/>
-      {% ifequal cur_page 0 %}
-        <div class="jumpPage_no">Go</div>
-      {% endifequal %}
-      {% ifnotequal cur_page 0 %}
-        <div class="jumpPage" onclick="Jumping()">Go</div>
-      {% endifnotequal %}
-    </div>
-    <div>页/共</div>
-    <div>{{max_page}}</div>
-    <div>页　</div>
-    {% ifequal cur_page max_page %}
-    <div class="pageDown_no">下页</div>
-    <div class="lastPage_no">尾页</div>
-    {% endifequal %}
-    {% ifnotequal cur_page max_page %}
-    <div class="pageDown" onclick="gotoPage({{down_page}})">下页</div>
-    <div class="lastPage" onclick="gotoPage({{max_page}})">尾页</div>
-    {% endifnotequal %}
-  </form>
+  {% ifequal cur_page 1 %}
+  <img src="/images/go-first-no.png" title="首页"/>
+  <img src="/images/go-previous-no.png" title="上页"/>
+  {% endifequal %}
+  {% ifequal cur_page 0 %}
+  <img src="/images/go-first-no.png" title="首页"/>
+  <img src="/images/go-previous-no.png" title="上页"/>
+  {% endifequal %}
+  {% ifnotequal cur_page 1 %}
+  {% ifnotequal cur_page 0 %}
+  <a href="?jumpPage=1"><img src="/images/go-first.png" title="首页"/></a>
+  <a href="?jumpPage={{up_page}}"><img src="/images/go-previous.png" title="上页"/></a>
+  {% endifnotequal %}
+  {% endifnotequal %}
+  <div class="pageText">  第{{cur_page}}页/共{{max_page}}页  </div>
+  {% ifequal cur_page max_page %}
+  <img src="/images/go-next-no.png" title="下页"/>
+  <img src="/images/go-last-no.png" title="尾页"/>
+  {% endifequal %}
+  {% ifnotequal cur_page max_page %}
+  <a href="?jumpPage={{down_page}}"><img src="/images/go-next.png" title="下页"/></a>
+  <a href="?jumpPage={{max_page}}"><img src="/images/go-last.png" title="尾页"/></a>
+  {% endifnotequal %}
 </div>
 {% endblock %}
